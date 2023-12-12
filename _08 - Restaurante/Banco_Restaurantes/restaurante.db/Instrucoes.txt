@@ -1,0 +1,189 @@
+2) 
+      CREATE TABLE "tb_produtos" (
+	"produtos_id"	INTEGER,
+	"nome"	TEXT NOT NULL,
+	"tipo"	TEXT,
+	"preco"	TEXT,
+	"descricao"	TEXT,
+	PRIMARY KEY("produtos_id" AUTOINCREMENT)
+);
+
+CREATE TABLE "tb_mesas" (
+	"mesa_id"	INTEGER,
+	"numero"	INTEGER,
+	"capacidade"	INTEGER,
+	PRIMARY KEY("mesa_id" AUTOINCREMENT)
+);
+
+CREATE TABLE "tb_pedidos" (
+	"pedido_id"	INTEGER,
+	"mesa_id"	INTEGER,
+	"produto_id"	INTEGER,
+	"quantidade"	INTEGER,
+	"total"	INTEGER,
+	PRIMARY KEY("pedido_id"),
+	FOREIGN KEY("mesa_id") REFERENCES "tb_mesas"("mesa_id"),
+	FOREIGN KEY("produto_id") REFERENCES "tb_produtos"("produtos_id")
+);
+
+
+3)
+	INSERT INTO tb_produtos (nome, tipo, preco, descricao)
+VALUES
+    ('Caviar', 'comida', 'R$90,00', 'comida de luxo'),
+    ('Hot Dog', 'comida', 'R$12,00', 'Salgado'),
+    ('Lasanha', 'comida', 'R$32,00', 'Salgado'),
+    ('Hamuburguer', 'comida', 'R$28,00', 'Salgado'),
+    ('Batata Frita', 'comida', 'R$18,00', 'Salgado'),
+    ('Coca Cola', 'bebida', 'R$8,00', 'Doce'),
+    ('Pepsi', 'bebida', 'R$7,00', 'Doce'),
+    ('Suco de laranja', 'bebida', 'R$9,00', 'Doce'),
+    ('Salada', 'comida', 'R$13,00', 'Salgado'),
+    ('Fanta', 'bebida', 'R$6,00', 'Doce');
+
+
+
+	INSERT INTO tb_mesas (numero, capacidade)
+VALUES
+    ('3', '2 pessoas'),
+    ('4', '3 pessoas'),
+    ('5', '2 pessoas'),
+    ('6', '4 pessoas'),
+    ('7', '3 pessoas'),
+    ('8', '6 pessoas'),
+    ('9', '5 pessoas'),
+    ('10', '2 pessoas'),
+    ('11', '4 pessoas'),
+    ('12', '3 pessoas');
+
+
+4)
+	INSERT INTO tb_pedidos (produto_id ,mesa_id, quantidade, total)
+VALUES
+    ('1', '1', '10', '130'),
+    ('2', '2', '20', '210'),
+    ('3', '3', '15', '218'),
+    ('4', '4', '30', '90'),
+    ('5', '5', '27', '111'),
+    ('6', '6', '31', '120'),
+    ('7', '7', '21', '150'),
+    ('8', '8', '56', '200'),
+    ('9', '9', '24', '179'),
+    ('10', '10', '14', '300');
+
+5)
+	SELECT * FROM tb_produtos WHERE tipo = "comida";
+	SELECT * FROM tb_mesas WHERE numero = "8";
+	SELECT nome,tipo,preco FROM tb_produtos;
+
+6)
+	ELECT * FROM tb_mesas WHERE numero = "6";
+	SELECT * FROM tb_mesas WHERE capacidade > "3";
+
+7)
+	SELECT 
+	tb_produtos.nome,
+	tb_produtos.tipo,
+	tb_produtos.preco,
+	tb_mesas.numero,
+	tb_mesas.capacidade,
+	tb_pedidos.pedido_id,
+	tb_pedidos.quantidade,
+	tb_pedidos.total
+	
+FROM
+	  tb_pedidos
+INNER JOIN
+	 tb_produtos ON tb_produtos.produtos_id = tb_pedidos.produto_id
+INNER JOIN
+	tb_mesas ON tb_mesas.mesa_id = tb_pedidos.mesa_id
+
+8)
+	SELECT 
+	tb_produtos.nome,
+	tb_produtos.tipo,
+	tb_produtos.preco,
+	tb_mesas.numero,
+	tb_mesas.capacidade,
+	tb_pedidos.pedido_id,
+	tb_pedidos.quantidade,
+	tb_pedidos.total
+	
+FROM
+	  tb_pedidos
+INNER JOIN
+	 tb_produtos ON tb_produtos.produtos_id = tb_pedidos.produto_id
+INNER JOIN
+	tb_mesas ON tb_mesas.mesa_id = tb_pedidos.mesa_id
+WHERE
+	tb_pedidos.total = '130'
+
+9)
+	SELECT 
+	tb_produtos.nome,
+	tb_produtos.tipo,
+	tb_produtos.preco,
+	tb_mesas.numero,
+	tb_mesas.capacidade,
+	tb_pedidos.pedido_id,
+	tb_pedidos.quantidade,
+	tb_pedidos.total
+	
+FROM
+	  tb_pedidos
+INNER JOIN
+	 tb_produtos ON tb_produtos.produtos_id = tb_pedidos.produto_id
+INNER JOIN
+	tb_mesas ON tb_mesas.mesa_id = tb_pedidos.mesa_id
+WHERE
+	tb_pedidos.total > '130'
+
+10)
+	UPDATE tb_produtos
+		SET nome = 'Salada'
+		WHERE produtos_id = 5;
+
+	UPDATE tb_produtos
+		SET descricao = 'veneno'
+		WHERE produtos_id = 7;
+
+	UPDATE tb_produtos
+		SET preco = 'R$7,00'
+		WHERE produtos_id = 9;
+
+	UPDATE tb_produtos
+		SET tipo = 'acarajé'
+		WHERE produtos_id = 2;
+
+	UPDATE tb_produtos
+		SET nome = 'caviar'
+		WHERE produtos_id = 10;
+
+11)
+	UPDATE tb_mesas
+		SET capacidade = '4'
+		WHERE mesa_id = 2;
+
+	UPDATE tb_mesas
+		SET capacidade = '6'
+		WHERE mesa_id = 5;
+
+	UPDATE tb_mesas
+		SET numero = '12'
+		WHERE mesa_id = 2;
+
+	UPDATE tb_mesas
+		SET numero = '8'
+		WHERE mesa_id = 6;
+
+	UPDATE tb_mesas
+		SET numero = '1'
+		WHERE mesa_id = 2;
+
+12)
+
+	DELETE FROM tb_pedidos WHERE quantidade = "21"
+	DELETE FROM tb_pedidos WHERE total = "130"
+	DELETE FROM tb_pedidos WHERE total = "200"
+	DELETE FROM tb_pedidos WHERE produto_id = "9"
+	DELETE FROM tb_pedidos WHERE mesa_id = "2"
